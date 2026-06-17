@@ -319,7 +319,7 @@ export default function ReservationsCRUDPage() {
                   <Table.Td ta="right">{row.montant.toLocaleString('fr-FR').replace(/\s/g, ' / ')} Ar</Table.Td>
                   <Table.Td ta="right" c="green.7">{row.acompte.toLocaleString()} Ar</Table.Td>
                   <Table.Td ta="right" fw={700} c={(row.montant - row.acompte) > 0 ? 'red.6' : 'gray.5'}>{(row.montant - row.acompte).toLocaleString()} Ar</Table.Td>
-                  <Table.Td ta="center"><Badge color={row.statut === 'Confirmé' ? 'green' : 'orange'}>{row.statut}</Badge></Table.Td>
+                  <Table.Td ta="center"><Badge color={row.statut === 'Confirmé' ? 'green' : row.statut === 'En attente' ? 'blue' : 'orange'}>{row.statut}</Badge></Table.Td>
                   <Table.Td className="no-print">
                     <Group gap="xs" justify="center">
                       <ActionIcon variant="subtle" color="blue" onClick={() => handleEditOpen(row)}><IconEdit size={18} /></ActionIcon>

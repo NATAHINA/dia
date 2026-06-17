@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     
     const maintenantMada = new Date(new Date().toLocaleString("en-US", { timeZone: "Indian/Antananarivo" }));
     
-    const moisSelectionne = parseInt(searchParams.get('month') || String(maintenantMada.getMonth() + 1), 10); 
+    const moisSelectionne = parseInt(searchParams.get('month') || String(maintenantMada.getMonth() + 1), 10);
     const anneeSelectionnee = parseInt(searchParams.get('year') || String(maintenantMada.getFullYear()), 10);
 
     const objectifDb = await Objectif.findOne({ mois: moisSelectionne, annee: anneeSelectionnee });

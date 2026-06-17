@@ -30,7 +30,8 @@ interface DashboardData {
 }
 
 export default function DashboardPage() {
-  const [moisSelectionne, setMoisSelectionne] = useState<string | null>('6'); // Juin par défaut
+  const [moisSelectionne, setMoisSelectionne] = useState<string | null>(String(new Date().getMonth() + 1));
+  const [anneeSelectionnee, setAnneeSelectionnee] = useState<string>(new Date().getFullYear().toString());
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -38,14 +39,19 @@ export default function DashboardPage() {
   const [enTrainDEditer, setEnTrainDEditer] = useState(false);
   const [nouvelObjectif, setNouvelObjectif] = useState<number>(50000000);
 
+ 
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/dashboard?month=${moisSelectionne}`);
+      const res = await fetch(`/api/dashboard?month=${moisSelectionne}&year=${anneeSelectionnee}`);
       if (res.ok) {
         const result = await res.json();
         setData(result);
-        // Initialiser la valeur du champ d'édition avec l'objectif récupéré
+        
+        if (result?.kpis?.annee) {
+          setAnneeSelectionnee(result.kpis.annee.toString());
+        }
+        
         if (result?.kpis?.objectifMois) {
           setNouvelObjectif(result.kpis.objectifMois);
         }
@@ -110,10 +116,14 @@ export default function DashboardPage() {
   const performanceCharts = data?.performanceCharts || [];
   const publicationsPerformantes = data?.publicationsPerformantes || [];
 
-  const nomMois = [
+  const listeDesMois = [
     { value: '1', label: 'Janvier' }, { value: '2', label: 'Février' }, { value: '3', label: 'Mars' },
-    { value: '4', label: 'Avril' }, { value: '5', label: 'Mai' }, { value: '6', label: 'Juin' }
-  ].find(m => m.value === moisSelectionne)?.label || 'Juin';
+    { value: '4', label: 'Avril' }, { value: '5', label: 'Mai' }, { value: '6', label: 'Juin' },
+    { value: '7', label: 'Juillet' }, { value: '8', label: 'Août' }, { value: '9', label: 'Septembre' },
+    { value: '10', label: 'Octobre' }, { value: '11', label: 'Novembre' }, { value: '12', label: 'Décembre' }
+  ];
+
+  const nomMois = listeDesMois.find(m => m.value === moisSelectionne)?.label || 'Janvier';
 
   return (
     <Container size="xl" py="md">
@@ -124,15 +134,17 @@ export default function DashboardPage() {
           <Text c="dimmed" size="sm">Analyse complète de l'agence : Finance, Opérations & Acquisition Facebook</Text>
         </div>
         <Group align="flex-end">
+          
           <Select
             label="Filtrer par mois :"
-            data={[{ value: '1', label: 'Janvier' }, { value: '2', label: 'Février' }, { value: '3', label: 'Mars' }, { value: '4', label: 'Avril' }, { value: '5', label: 'Mai' }, { value: '6', label: 'Juin' }]}
+            data={listeDesMois}
             value={moisSelectionne}
             onChange={setMoisSelectionne}
             allowDeselect={false}
             w={160}
           />
-          <Badge variant="filled" color="blue" size="lg" h={36}>Période : {nomMois} 2026</Badge>
+
+          <Badge variant="filled" color="blue" size="lg" h={36}>Période : {nomMois} {anneeSelectionnee}</Badge>
         </Group>
       </Group>
 
@@ -168,7 +180,7 @@ export default function DashboardPage() {
       </SimpleGrid>
 
       {/* BLOC 2 : VUE RECAPITULATIVE DU MOIS FILTRÉ */}
-      <Title order={4} mb="sm" c="dimmed">Performance Mensuelle : {nomMois} 2026</Title>
+      <Title order={4} mb="sm" c="dimmed">Performance Mensuelle : {nomMois} {anneeSelectionnee}</Title>
       <SimpleGrid cols={{ base: 1, sm: 2, md: 5 }} mb="xl">
         {/* CARTE DYNAMIQUE CA DU MOIS AVEC MODIFICATION DE L'OBJECTIF */}
         <Card padding="sm" radius="md" withBorder shadow="xs">

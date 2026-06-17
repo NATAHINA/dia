@@ -156,6 +156,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             
             <Text
               component="h3"
+              hiddenFrom="sm"
               gradient={{ from: 'blue.7', to: 'cyan.6', deg: 45 }}
               variant="gradient"
               style={{
