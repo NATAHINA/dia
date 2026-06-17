@@ -137,7 +137,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         }}
       >
         <Group gap="xs">
-          <Burger opened={opened} onClick={toggle} visibleFrom="sm" size="sm" />
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           
           <Group gap={6} style={{ cursor: 'pointer' }} onClick={() => navigateTo('/main')}>
             <div 
