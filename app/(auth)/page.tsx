@@ -114,7 +114,12 @@ export default function AuthenticationPage() {
               />
               
               <Group justify="space-between" mt="xs">
-                <Anchor component="button" size="sm" type="button" fw={500}>
+                <Anchor 
+                  component="button" 
+                  size="sm" 
+                  type="button" 
+                  fw={500}
+                  onClick={() => router.push('/forgot-password')}>
                   Mot de passe oublié ?
                 </Anchor>
               </Group>

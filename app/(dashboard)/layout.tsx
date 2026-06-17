@@ -13,7 +13,8 @@ import {
   UnstyledButton, 
   Divider, 
   rem,
-  Skeleton
+  Skeleton, 
+  Box
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { 
@@ -136,7 +137,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         }}
       >
         <Group gap="xs">
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+          <Burger opened={opened} onClick={toggle} visibleFrom="sm" size="sm" />
           
           <Group gap={6} style={{ cursor: 'pointer' }} onClick={() => navigateTo('/main')}>
             <div 
@@ -156,7 +157,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             
             <Text
               component="h3"
-              hiddenFrom="sm"
+              visibleFrom="sm"
               gradient={{ from: 'blue.7', to: 'cyan.6', deg: 45 }}
               variant="gradient"
               style={{
@@ -179,7 +180,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <Avatar radius="xl" color="blue" variant="filled" size="sm">
                   {loading ? '..' : userNom.substring(0, 2).toUpperCase()}
                 </Avatar>
-                <div style={{ flex: 1 }} className="hidden-mobile">
+                <Box style={{ flex: 1 }} visibleFrom="sm">
                   {loading ? (
                     <>
                       <Skeleton height={12} width={60} mb={4} />
@@ -191,7 +192,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                       <Text size="xs" c="dimmed">{userRole}</Text>
                     </>
                   )}
-                </div>
+                </Box>
                 <IconChevronRight size={14} style={{ transform: 'rotate(90deg)' }} />
               </Group>
             </UnstyledButton>

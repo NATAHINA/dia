@@ -38,7 +38,10 @@ const UserSchema = new mongoose.Schema({
   notifVentes: {
     type: Boolean,
     default: true,
-  }
+  },
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date }
 }, { timestamps: true });
+
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);

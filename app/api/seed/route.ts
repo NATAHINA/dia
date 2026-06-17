@@ -32,7 +32,9 @@ export async function GET() {
       role: 'Administrateur',         // Aligné avec l'enum ['Administrateur', 'Agent', 'Comptable']
       statut: 'Actif',                // Aligné avec l'enum ['Actif', 'Inactif']
       notifEmail: true,
-      notifVentes: true
+      notifVentes: true,
+      resetPasswordToken: null,
+      resetPasswordExpires: null
     });
 
     // 5. Extraction sécurisée du mot de passe de l'objet de retour
