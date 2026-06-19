@@ -175,22 +175,22 @@ export default function MarketingCRUDPage() {
     activePage * itemsPerPage
   );
 
-  const handleSyncMeta = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch('/api/marketing/sync', { method: 'POST' });
-      if (res.ok) {
-        await fetchCampaigns(); // Recharger les données après la synchro
-        alert("Synchronisation réussie !");
-      } else {
-        alert("Erreur lors de la synchronisation.");
-      }
-    } catch (err) {
-      console.error('Erreur:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const handleSyncMeta = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const res = await fetch('/api/marketing/sync', { method: 'POST' });
+  //     if (res.ok) {
+  //       await fetchCampaigns(); // Recharger les données après la synchro
+  //       alert("Synchronisation réussie !");
+  //     } else {
+  //       alert("Erreur lors de la synchronisation.");
+  //     }
+  //   } catch (err) {
+  //     console.error('Erreur:', err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <Container size="xl" py="md" className="printable-container">
@@ -202,7 +202,7 @@ export default function MarketingCRUDPage() {
           <Text c="dimmed" size="sm">Suivi des performances et rentabilité des annonces</Text>
         </div>
 
-        <Group>
+        {/*<Group>
           <Button 
             variant="outline" 
             color="blue" 
@@ -215,11 +215,11 @@ export default function MarketingCRUDPage() {
           <Button leftSection={<IconPlus size={16} />} onClick={handleAddOpen} radius="md">
             Ajouter manuellement
           </Button>
-        </Group>
+        </Group>*/}
 
-        {/*<Button leftSection={<IconPlus size={16} />} onClick={handleAddOpen} radius="md">
+        <Button leftSection={<IconPlus size={16} />} onClick={handleAddOpen} radius="md">
           Ajouter une publication
-        </Button>*/}
+        </Button>
       </Group>
 
       {/* BARRE D'OUTILS ET RECHERCHE */}
