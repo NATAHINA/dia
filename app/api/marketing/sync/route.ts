@@ -9,7 +9,8 @@ export async function POST() {
     // 1. Appel à l'API Meta (nécessite un Access Token valide)
     const PAGE_ID = process.env.META_PAGE_ID;
     const TOKEN = process.env.META_ACCESS_TOKEN;
-    const url = `https://graph.facebook.com/v25.0/${PAGE_ID}/insights?metric=page_impressions,page_messages_received&access_token=${TOKEN}`;
+    
+    const url = `https://graph.facebook.com/v25.0/${PAGE_ID}/insights?metric=page_impressions,page_messages_received&period=lifetime&access_token=${TOKEN}`;
     
     const response = await fetch(url);
     const data = await response.json();
