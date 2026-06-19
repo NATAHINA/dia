@@ -18,16 +18,30 @@ export async function POST(request: Request) {
     await dbConnect();
     const body = await request.json();
     
-    // Calcul automatique du score d'efficacité si non fourni (ex: messages + (ventes * 10))
-    const score = body.score || (Number(body.messages) + (Number(body.reservationsObtenues) * 10));
-
-    const newCampaign = await Marketing.create({
-      ...body,
-      score
-    });
+    const newCampaign = await Marketing.create(body);
 
     return NextResponse.json(newCampaign, { status: 201 });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 }
+
+
+// export async function POST(request: Request) {
+//   try {
+//     await dbConnect();
+//     const body = await request.json();
+    
+//     // Calcul automatique du score d'efficacité si non fourni (ex: messages + (ventes * 10))
+//     const score = body.score || (Number(body.messages) + (Number(body.reservationsObtenues) * 10));
+
+//     const newCampaign = await Marketing.create({
+//       ...body,
+//       score
+//     });
+
+//     return NextResponse.json(newCampaign, { status: 201 });
+//   } catch (error: any) {
+//     return NextResponse.json({ error: error.message }, { status: 400 });
+//   }
+// }

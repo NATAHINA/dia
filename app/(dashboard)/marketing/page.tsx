@@ -8,7 +8,7 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { 
-  IconPlus, IconEdit, IconTrash, IconSearch, IconAlertTriangle, 
+  IconPlus, IconEdit, IconTrash, IconSearch, IconAlertTriangle, IconRefresh,
   IconDownload, IconFileTypeXls, IconFileTypePdf, IconChevronDown 
 } from '@tabler/icons-react';
 import * as XLSX from 'xlsx';
@@ -175,18 +175,51 @@ export default function MarketingCRUDPage() {
     activePage * itemsPerPage
   );
 
+  const handleSyncMeta = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/marketing/sync', { method: 'POST' });
+      if (res.ok) {
+        await fetchCampaigns(); // Recharger les données après la synchro
+        alert("Synchronisation réussie !");
+      } else {
+        alert("Erreur lors de la synchronisation.");
+      }
+    } catch (err) {
+      console.error('Erreur:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Container size="xl" py="md" className="printable-container">
       
 
-      <Group justify="space-between" mb="xl" className="no-print">
+      <Group justify="space-between" mb="xl">
         <div>
           <Title order={2}>Marketing Facebook</Title>
           <Text c="dimmed" size="sm">Suivi des performances et rentabilité des annonces</Text>
         </div>
-        <Button leftSection={<IconPlus size={16} />} onClick={handleAddOpen} radius="md">
+
+        <Group>
+          <Button 
+            variant="outline" 
+            color="blue" 
+            leftSection={<IconRefresh size={16} />} 
+            onClick={handleSyncMeta} 
+            loading={loading}
+          >
+            Synchroniser Meta
+          </Button>
+          <Button leftSection={<IconPlus size={16} />} onClick={handleAddOpen} radius="md">
+            Ajouter manuellement
+          </Button>
+        </Group>
+
+       {/* <Button leftSection={<IconPlus size={16} />} onClick={handleAddOpen} radius="md">
           Ajouter une publication
-        </Button>
+        </Button>*/}
       </Group>
 
       {/* BARRE D'OUTILS ET RECHERCHE */}
